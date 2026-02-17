@@ -49,6 +49,17 @@ public class EstoqueProdutoController {
         return ResponseEntity.ok(estoqueProdutoService.obterQuantidadeTotal(produtoId));
     }
 
+    /**
+     * Obtém a quantidade vendível de um produto (Estoque Físico Projeção de Vendas).
+     *
+     * Retorna apenas a soma dos estoques em locais vendíveis,
+     * excluindo Reparo, Devolução, Defeito, etc.
+     */
+    @GetMapping("/produto/{produtoId}/quantidade-vendivel")
+    public ResponseEntity<Integer> obterQuantidadeVendivel(@PathVariable Long produtoId) {
+        return ResponseEntity.ok(estoqueProdutoService.obterQuantidadeVendivel(produtoId));
+    }
+
     @GetMapping("/estoque-baixo")
     public ResponseEntity<List<EstoqueProdutoDTO>> listarEstoqueBaixo() {
         return ResponseEntity.ok(estoqueProdutoService.listarEstoqueBaixo());

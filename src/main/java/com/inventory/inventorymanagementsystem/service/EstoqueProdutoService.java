@@ -89,6 +89,32 @@ public class EstoqueProdutoService {
         return total != null ? total : 0;
     }
 
+    /**
+     * Obtém a quantidade vendível de um produto (Estoque Físico Projeção de Vendas).
+     *
+     * Soma apenas os estoques em locais marcados como vendível (vendivel = true).
+     * Exclui locais como: Reparo, Devolução, Defeito.
+     *
+     * Exemplo:
+     * - Loja (vendível): 26
+     * - Fulfillment (vendível): 5
+     * - Reparo (não vendível): 2
+     * - Devolução (não vendível): 1
+     * Total Vendível = 31 (apenas Loja + Fulfillment)
+     *
+     * @param produtoId ID do produto
+     * @return quantidade disponível para venda
+     */
+    @Transactional(readOnly = true)
+    public Integer obterQuantidadeVendivel(Long produtoId) {
+        Produto produto = produtoRepository.findById(produtoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Produto", produtoId));
+
+        Integer total = estoqueProdutoRepository.somarQuantidadeVendivel(produto);
+
+        return total != null ? total : 0;
+    }
+
     @Transactional(readOnly = true)
     public List<EstoqueProdutoDTO> listarEstoqueBaixo() {
         return estoqueProdutoRepository.findEstoqueBaixo().stream()

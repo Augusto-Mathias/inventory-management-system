@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service responsável pela lógica de negócio de locais de estoque.
+ */
 @Service
 @RequiredArgsConstructor
 public class LocalEstoqueService {
@@ -32,6 +35,7 @@ public class LocalEstoqueService {
         local.setTipo(dto.getTipo());
         local.setEndereco(dto.getEndereco());
         local.setAtivo(true);
+        local.setVendivel(dto.getVendivel() != null ? dto.getVendivel() : true); // ← ADICIONAR
 
         return toDTO(localEstoqueRepository.save(local));
     }
@@ -77,6 +81,7 @@ public class LocalEstoqueService {
         local.setDescricao(dto.getDescricao());
         local.setTipo(dto.getTipo());
         local.setEndereco(dto.getEndereco());
+        local.setVendivel(dto.getVendivel() != null ? dto.getVendivel() : true); // ← ADICIONAR
 
         return toDTO(localEstoqueRepository.save(local));
     }
@@ -97,6 +102,7 @@ public class LocalEstoqueService {
                 .tipo(local.getTipo())
                 .endereco(local.getEndereco())
                 .ativo(local.getAtivo())
+                .vendivel(local.getVendivel())  // ← ADICIONAR
                 .createdAt(local.getCreatedAt())
                 .build();
     }

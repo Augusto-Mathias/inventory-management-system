@@ -7,6 +7,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entidade que representa um local de armazenamento de estoque.
+ * Pode ser uma loja física, fulfillment, área de reparo, saldão, etc.
+ */
 @Entity
 @Table(name = "locais_estoque")
 @Data
@@ -30,4 +34,15 @@ public class LocalEstoque extends BaseEntity {
 
     @Column(nullable = false)
     private Boolean ativo = true;
+
+    /**
+     * Indica se produtos neste local estão disponíveis para venda.
+     *
+     * true = Conta no estoque vendível (Loja, Fulfillment, Saldão)
+     * false = Não conta no estoque vendível (Reparo, Devolução, Defeito)
+     *
+     * Usado para calcular "Estoque Físico Projeção de Vendas"
+     */
+    @Column(nullable = false)
+    private Boolean vendivel = true;
 }

@@ -21,4 +21,10 @@ public class LocalEstoqueCreateDTO {
     private TipoLocal tipo;
 
     private String endereco;
+
+    /**
+     * Indica se produtos neste local estão disponíveis para venda.
+     * Padrão: true
+     */
+    private Boolean vendivel = true;
 }

@@ -20,8 +20,21 @@ public interface EstoqueProdutoRepository extends JpaRepository<EstoqueProduto, 
 
     List<EstoqueProduto> findByLocalEstoque(LocalEstoque localEstoque);
 
+    /**
+     * Soma a quantidade total de um produto em TODOS os locais
+     */
     @Query("SELECT SUM(e.quantidade) FROM EstoqueProduto e WHERE e.produto = :produto")
     Integer somarQuantidadePorProduto(@Param("produto") Produto produto);
+
+    /**
+     * Soma a quantidade de um produto apenas em locais VENDÍVEIS
+     * (Estoque Físico Projeção de Vendas)
+     *
+     * Usado para calcular quanto produto está realmente disponível para venda,
+     * excluindo locais como Reparo, Devolução, Defeito, etc.
+     */
+    @Query("SELECT SUM(e.quantidade) FROM EstoqueProduto e WHERE e.produto = :produto AND e.localEstoque.vendivel = true")
+    Integer somarQuantidadeVendivel(@Param("produto") Produto produto);
 
     @Query("SELECT e FROM EstoqueProduto e WHERE e.quantidade <= e.produto.estoqueMinimo")
     List<EstoqueProduto> findEstoqueBaixo();

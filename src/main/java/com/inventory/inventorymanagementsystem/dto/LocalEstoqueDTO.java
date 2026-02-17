@@ -19,5 +19,6 @@ public class LocalEstoqueDTO {
     private TipoLocal tipo;
     private String endereco;
     private Boolean ativo;
+    private Boolean vendivel;
     private LocalDateTime createdAt;
 }
