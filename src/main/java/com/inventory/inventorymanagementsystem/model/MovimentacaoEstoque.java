@@ -1,5 +1,6 @@
 package com.inventory.inventorymanagementsystem.model;
 
+import com.inventory.inventorymanagementsystem.model.enums.MotivoMovimentacao;
 import com.inventory.inventorymanagementsystem.model.enums.TipoMovimentacao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,6 +42,16 @@ public class MovimentacaoEstoque extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private TipoMovimentacao tipo;
+
+    /**
+     * Motivo/razão da movimentação.
+     * Obrigatório para rastreabilidade e auditoria.
+     *
+     * Exemplos: VENDA, COMPRA_FORNECEDOR, DEVOLUCAO_CLIENTE, etc.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 50)
+    private MotivoMovimentacao motivo;
 
     /**
      * Quantidade movimentada.

@@ -1,5 +1,6 @@
 package com.inventory.inventorymanagementsystem.dto;
 
+import com.inventory.inventorymanagementsystem.model.enums.MotivoMovimentacao;
 import com.inventory.inventorymanagementsystem.model.enums.TipoMovimentacao;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,9 @@ public class MovimentacaoEstoqueCreateDTO {
 
     @NotNull(message = "Tipo de movimentacao e obrigatorio")
     private TipoMovimentacao tipo;
+
+    @NotNull(message = "Motivo da movimentacao e obrigatorio")
+    private MotivoMovimentacao motivo;
 
     @NotNull(message = "Quantidade e obrigatoria")
     private Integer quantidade;

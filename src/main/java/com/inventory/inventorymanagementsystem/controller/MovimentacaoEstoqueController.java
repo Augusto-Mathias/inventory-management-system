@@ -2,6 +2,7 @@ package com.inventory.inventorymanagementsystem.controller;
 
 import com.inventory.inventorymanagementsystem.dto.MovimentacaoEstoqueCreateDTO;
 import com.inventory.inventorymanagementsystem.dto.MovimentacaoEstoqueDTO;
+import com.inventory.inventorymanagementsystem.model.enums.MotivoMovimentacao;
 import com.inventory.inventorymanagementsystem.model.enums.TipoMovimentacao;
 import com.inventory.inventorymanagementsystem.service.MovimentacaoEstoqueService;
 import jakarta.validation.Valid;
@@ -89,6 +90,19 @@ public class MovimentacaoEstoqueController {
     @GetMapping("/tipo/{tipo}")
     public ResponseEntity<List<MovimentacaoEstoqueDTO>> listarPorTipo(@PathVariable TipoMovimentacao tipo) {
         return ResponseEntity.ok(movimentacaoEstoqueService.listarPorTipo(tipo));
+    }
+
+    /**
+     * Lista movimentações por motivo específico
+     *
+     * Exemplos:
+     * - GET /api/movimentacoes/motivo/VENDA
+     * - GET /api/movimentacoes/motivo/COMPRA_FORNECEDOR
+     * - GET /api/movimentacoes/motivo/DEVOLUCAO_CLIENTE
+     */
+    @GetMapping("/motivo/{motivo}")
+    public ResponseEntity<List<MovimentacaoEstoqueDTO>> listarPorMotivo(@PathVariable MotivoMovimentacao motivo) {
+        return ResponseEntity.ok(movimentacaoEstoqueService.listarPorMotivo(motivo));
     }
 
     /**

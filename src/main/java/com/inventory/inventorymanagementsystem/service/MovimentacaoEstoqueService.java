@@ -5,6 +5,7 @@ import com.inventory.inventorymanagementsystem.dto.MovimentacaoEstoqueDTO;
 import com.inventory.inventorymanagementsystem.exception.BadRequestException;
 import com.inventory.inventorymanagementsystem.exception.ResourceNotFoundException;
 import com.inventory.inventorymanagementsystem.model.*;
+import com.inventory.inventorymanagementsystem.model.enums.MotivoMovimentacao;
 import com.inventory.inventorymanagementsystem.model.enums.TipoMovimentacao;
 import com.inventory.inventorymanagementsystem.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -100,6 +101,7 @@ public class MovimentacaoEstoqueService {
         movimentacao.setProduto(produto);
         movimentacao.setLocalEstoque(localEstoque);
         movimentacao.setTipo(dto.getTipo());
+        movimentacao.setMotivo(dto.getMotivo());  // ← MOVER PARA AQUI
         movimentacao.setQuantidade(dto.getQuantidade());
         movimentacao.setQuantidadeAnterior(quantidadeAnterior);
         movimentacao.setQuantidadeAtual(novaQuantidade);
@@ -195,6 +197,16 @@ public class MovimentacaoEstoqueService {
     }
 
     /**
+     * Lista movimentações por motivo específico
+     */
+    @Transactional(readOnly = true)
+    public List<MovimentacaoEstoqueDTO> listarPorMotivo(MotivoMovimentacao motivo) {
+        return movimentacaoEstoqueRepository.findByMotivo(motivo).stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Lista movimentações dentro de um período
      */
     @Transactional(readOnly = true)
@@ -216,6 +228,7 @@ public class MovimentacaoEstoqueService {
                 .localEstoqueId(movimentacao.getLocalEstoque().getId())
                 .localEstoqueNome(movimentacao.getLocalEstoque().getNome())
                 .tipo(movimentacao.getTipo())
+                .motivo(movimentacao.getMotivo())
                 .quantidade(movimentacao.getQuantidade())
                 .quantidadeAnterior(movimentacao.getQuantidadeAnterior())
                 .quantidadeAtual(movimentacao.getQuantidadeAtual())

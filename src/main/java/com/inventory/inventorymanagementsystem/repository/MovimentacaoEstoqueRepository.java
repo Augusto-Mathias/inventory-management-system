@@ -3,6 +3,7 @@ package com.inventory.inventorymanagementsystem.repository;
 import com.inventory.inventorymanagementsystem.model.LocalEstoque;
 import com.inventory.inventorymanagementsystem.model.MovimentacaoEstoque;
 import com.inventory.inventorymanagementsystem.model.Produto;
+import com.inventory.inventorymanagementsystem.model.enums.MotivoMovimentacao;
 import com.inventory.inventorymanagementsystem.model.enums.TipoMovimentacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -65,4 +66,9 @@ public interface MovimentacaoEstoqueRepository extends JpaRepository<Movimentaca
      */
     @Query("SELECT SUM(ABS(m.quantidade)) FROM MovimentacaoEstoque m WHERE m.produto = :produto AND m.tipo = 'SAIDA'")
     Integer somarSaidas(@Param("produto") Produto produto);
+
+    /**
+     * Lista movimentações por motivo específico
+     */
+    List<MovimentacaoEstoque> findByMotivo(MotivoMovimentacao motivo);
 }

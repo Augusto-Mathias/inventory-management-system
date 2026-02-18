@@ -1,5 +1,6 @@
 package com.inventory.inventorymanagementsystem.dto;
 
+import com.inventory.inventorymanagementsystem.model.enums.MotivoMovimentacao;
 import com.inventory.inventorymanagementsystem.model.enums.TipoMovimentacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class MovimentacaoEstoqueDTO {
     private Long localEstoqueId;
     private String localEstoqueNome;
     private TipoMovimentacao tipo;
+    private MotivoMovimentacao motivo;
     private Integer quantidade;
     private Integer quantidadeAnterior;
     private Integer quantidadeAtual;
